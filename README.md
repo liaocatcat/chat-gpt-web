@@ -2,8 +2,12 @@
 
 #### 介绍
 {**以下是 Gitee 平台说明，您可以替换此简介**
+参考项目：https://github.com/SmileBuild/ChatGPT-Web
+
+但是将gpt-3接口替换为访问后端的SSE流式响应方式
 
 chatgpt-web.html 对应java后端
+
 chatgpt-web-Py.html 对应python后端
 
 #### 软件架构
