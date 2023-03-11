@@ -299,6 +299,9 @@
             role:"user",
             content: this.prompt
           }
+          if(this.messages.length>4){
+            this.messages.splice(0,1)
+          }
           this.messages.push(message);
           let data = {
             messages: this.messages,
