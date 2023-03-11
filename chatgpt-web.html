@@ -191,8 +191,6 @@
       data() {
         return {
           loading: false,
-          // key: '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',
-          key: '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',
           prompt: '',
           temperature: 1,
           top_p: 1,
@@ -247,7 +245,7 @@
            axios.post('https://liaocat.msns.cn:1443/api/models', {}, {
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ` + this.key,
+              // 'Authorization': `Bearer ` + this.key,
             }
           })
             .then(response => {
