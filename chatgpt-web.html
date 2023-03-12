@@ -121,9 +121,10 @@
 <!--              <el-input v-model="key" placeholder="API秘钥" show-password type="password"></el-input>-->
 <!--              <h4>Prompt</h4>-->
 
-              <el-input type="textarea" v-model="prompt" placeholder="输入内容" rows="5"></el-input>
+              <el-input type="textarea" v-model="prompt" placeholder="输入内容(限制2000字)" rows="5" maxlength=2000 ></el-input>
               <h4></h4>
               <el-button size="large" type="success" @click="submitForm">Confirm 确定</el-button>
+              <el-button v-if="model === 'OpenAi51'" size="large" type="staging" @click="staging">Staging 暂存</el-button>
 <!--              <h4>Max_tokens</h4>-->
 
 <!--              <el-input-number type="number" v-model="max_tokens"></el-input-number>-->
@@ -199,7 +200,7 @@
           presence_penalty: 0,
           // stop: ["Human:", "AI:"],
           //model: 'text-davinci-003',
-          model: 'gpt-3.5-turbo',
+          model: 'OpenAi00',
           //models: ['text-davinci-003', 'text-davinci-002', 'text-curie-001'],
           models: [],
           system: '你是一个乐于助人的AI助手',
@@ -210,22 +211,27 @@
           download_disable: true,
           myImg: '',
           user: 'default user',
-          uid: null
+          uid: null,
+          stagingMessages: []
         }
       },
       watch: {
         response(resp) {
-          if (resp == '') {
+          if (resp == '' && this.myImg == '') {
             this.download_disable = true;
           } else {
             this.download_disable = false;
           }
         },
         model(model) {
-          if (model == 'OpenAi50') {
-            this.download_disable = true;
-          } else {
-            this.download_disable = false;
+          // if (model == 'OpenAi50') {
+          //   this.download_disable = true;
+          // } else {
+          //   this.download_disable = false;
+          // }
+          if (model !== 'OpenAi51'){
+            this.stagingMessages=[];
+            this.systemFlag=false;
           }
         },
         system(system) {
@@ -286,6 +292,20 @@
             element.click();
           }
         },
+        staging(){
+          if(!this.systemFlag){
+            this.stagingMessages.push({
+              role:"system",
+              content: this.system});
+              this.systemFlag = true;
+          }
+          message = {
+            role:"user",
+            content: this.prompt
+          }
+          this.stagingMessages.push(message);
+          this.prompt='';
+        },
         submitForm() {
           if(!this.systemFlag){
             this.messages.push({
@@ -294,7 +314,15 @@
               this.systemFlag = true;
           }
           this.response += '\r\n\r\n'
-          this.response = this.response + '你:\t' + this.prompt + '\r\n\r\nAI:\t';
+          for (let index = 1; index < this.stagingMessages.length; index++) {
+            this.response = this.response + '你:\t' + this.stagingMessages[index].content + '\r\n';
+          }
+          if(this.prompt===''){
+            this.response = this.response + '\r\nAI:\t';
+          }else{
+            this.response = this.response + '你:\t' + this.prompt + '\r\n\r\nAI:\t';
+          }
+          this.messages.push.apply(this.messages,this.stagingMessages);
           message = {
             role:"user",
             content: this.prompt
