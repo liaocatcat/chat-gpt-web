@@ -313,11 +313,14 @@
               content: this.system});
               this.systemFlag = true;
           }
+          if(this.messages.length>11){
+            this.messages.splice(1,2)
+          }
           this.response += '\r\n\r\n'
           for (let index = 1; index < this.stagingMessages.length; index++) {
             this.response = this.response + '你:\t' + this.stagingMessages[index].content + '\r\n';
           }
-          if(this.prompt===''){//
+          if(this.prompt===''){
             this.response = this.response + '\r\nAI:\t';
           }else{
             this.response = this.response + '你:\t' + this.prompt + '\r\n\r\nAI:\t';
@@ -326,9 +329,6 @@
           message = {
             role:"user",
             content: this.prompt
-          }
-          if(this.messages.length>4){
-            this.messages.splice(0,1)
           }
           this.messages.push(message);
           let data = {
@@ -395,6 +395,10 @@
                     }
                   }, 100);
 
+                  let messageAI = {
+                    role:"assistant",
+                    content: ''
+                  }
                   source.addEventListener('close', e => {
                     source.close();
                     waitFlag = false
@@ -402,6 +406,7 @@
                     this.loading = false
                     this.response = this.response.replace('______','')
                     this.response = this.response.replace('____','')
+                    this.messages.push(messageAI)
                   }, false);
 
                   source.addEventListener('pause', e => {
@@ -420,6 +425,7 @@
                     this.response = this.response.replace('____','')
                     this.loading = false
                     this.response += JSON.parse(e.data.replace(/'/g, '"')).msg
+                    // messageAI.content += JSON.parse(e.data.replace(/'/g, '"')).msg
                     // this.uid = JSON.parse(e.data.replace(/'/g, '"')).uid
                     waitFlag = true
                   }, false);
