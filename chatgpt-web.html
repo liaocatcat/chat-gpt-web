@@ -317,7 +317,7 @@
           for (let index = 1; index < this.stagingMessages.length; index++) {
             this.response = this.response + '你:\t' + this.stagingMessages[index].content + '\r\n';
           }
-          if(this.prompt===''){
+          if(this.prompt===''){//
             this.response = this.response + '\r\nAI:\t';
           }else{
             this.response = this.response + '你:\t' + this.prompt + '\r\n\r\nAI:\t';
