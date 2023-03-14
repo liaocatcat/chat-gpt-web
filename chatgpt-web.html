@@ -121,7 +121,7 @@
 <!--              <el-input v-model="key" placeholder="API秘钥" show-password type="password"></el-input>-->
 <!--              <h4>Prompt</h4>-->
 
-              <el-input type="textarea" v-model="prompt" placeholder="输入内容(限制2000字)" rows="5" maxlength=2000 ></el-input>
+              <el-input type="textarea" v-model="prompt" placeholder="输入内容(超过2000字可能出错不返回)" rows="5" ></el-input>
               <h4></h4>
               <el-button size="large" type="success" @click="submitForm">Confirm 确定</el-button>
               <el-button v-if="model === 'OpenAi51'" size="large" type="staging" @click="staging">Staging 暂存</el-button>

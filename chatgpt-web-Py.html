@@ -115,7 +115,7 @@
             <h2>Request 请求</h2>
             <el-form>
 
-              <el-input type="textarea" v-model="prompt" placeholder="输入内容(限制2000字)" rows="5" maxlength=2000 ></el-input>
+              <el-input type="textarea" v-model="prompt" placeholder="输入内容(超过2000字可能出错不返回)" rows="5" ></el-input>
               <h4></h4>
               <el-button size="large" type="success" @click="submitForm">Confirm 确定</el-button>
             </el-form>
