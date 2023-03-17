@@ -6,9 +6,11 @@
 
 但是将gpt-3接口替换为访问后端的SSE流式响应方式
 
-chatgpt-web.html 对应java后端
+index-web-java.html 对应java后端
 
-chatgpt-web-Py.html 对应python后端
+index-web.html 对应python后端
+
+感谢这位仁兄编写的前端页面，我拿来改了下：https://gitee.com/lhyoh/chatgpt-html
 
 #### 软件架构
 软件架构说明

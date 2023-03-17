@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    {"source": "/openai/(.*)", "destination": "https://api.openai.com/$1"}
+  ]
+}
